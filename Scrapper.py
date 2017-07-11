@@ -37,5 +37,4 @@ for link in soup2.findAll('a', attrs={'href': re.compile("^http://"),'title' : r
     downloadurl = link.get('href')
 
 #Can be done using requests but urllib is one liner
-urllib.urlretrieve(downloadurl,"C:/Users/Mohit/Desktop/%s.cbr" %filename)
 urllib.urlretrieve(downloadurl,"{0}/{1}.cbr".format(downloadpath, filename))
