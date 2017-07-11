@@ -39,6 +39,7 @@ for link in soup2.findAll('a', attrs={'href': re.compile("^http://"),'title' : r
 #Can be done using requests but urllib is one liner
 urllib.urlretrieve(downloadurl,"{0}/{1}.cbr".format(downloadpath, filename))
 
+#Upload downloaded file to gdrive comics folder using google drive api and pydrive
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
@@ -47,13 +48,13 @@ gauth.LocalWebserverAuth()
 
 drive = GoogleDrive(gauth)
 
-file2 = drive.CreateFile({'title':'{0}.cbr'.format(filename), 'mimeType':'application/cbr',
+file = drive.CreateFile({'title':'{0}.cbr'.format(filename), 'mimeType':'application/cbr',
         "parents": [{"id": "<Your folder id goes here>"}]})
 
-file2.SetContentFile("{0}/{1}.cbr".format(downloadpath, filename))
+file.SetContentFile("{0}/{1}.cbr".format(downloadpath, filename))
+file.Upload()
 
-file2.Upload()
-print('Created file %s with mimeType %s' % (file2['title'],
+print('Uploaded file %s with mimeType %s' % (file['title'],
 file2['mimeType']))
 # Created file hello.png with mimeType image/png
 
